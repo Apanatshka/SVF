@@ -1,0 +1,9 @@
+{
+"hw": "!:h world!",
+"h": "Hello",
+"compile": "javac -classpath !join:classpath.,",
+"classpath": [
+	"path1",
+	"path2"
+	]
+}
