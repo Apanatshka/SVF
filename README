@@ -9,3 +9,5 @@ String/Variables/Functions
 
 This program is a single commandline tool. It works with a file or textinput and tries to resolve a string from the variables and functions used. 
 The only use I've thought of so far, for this tool, is to use it as an independent compile/execution help which can do the same things as IDEs can. 
+
+This software is licensed under the MIT license, see the LICENSE file. 
