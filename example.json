@@ -1,10 +1,10 @@
-﻿{
-"hw": "!:h world!",
-"h": "Hello",
-"compile": "javac -classpath !join:classpaths&,",
-"classpaths": [
-	"path1",
-	"path2"],
-"classpath": "single string",
-"classpat": 1
+{
+	"hw": "!:h! world!",
+	"h": "Hello",
+	"compile": "javac -classpath !join:classpaths&,!",
+	"classpaths": 
+		["path1",
+		"path2"],
+	"classpath": "single string",
+	"classpat": 1
 }
