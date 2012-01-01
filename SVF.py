@@ -1,13 +1,14 @@
-#!/usr/bin/python
-#
+﻿#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# Python 3.2 code
 #
 # SVF - Strings/Variables/Function
-# version 0.1
+# version 0.2
 # This commandline tool reads a data-file with name-value pairs, 
 # and outputs the value of the specified name with some special parts 
 # substituted. 
 #
-# I"ve tried to keep almost everything in this tool configurable and/or 
+# I've tried to keep almost everything in this tool configurable and/or 
 # extendable. This includes:
 # - The kind of data-file
 # - The special characters for identifying to be substituted part
@@ -17,27 +18,35 @@ import argparse
 import json
 import re
 
+interpret_chars = ['!', ':', '&']
+
 from SVF_functions import fncs
 
 def main():
+	global parser
+	parser = get_parser()
 	global args
-	args = get_args()
+	args = parser.parse_args()
 	global vars
 	vars = json.load(args.file)
 	args.file.close()
 	if args.var in vars:
 		print(interpret(vars[args.var]))
-	#planned functionality: print errors
 	else:
-		pass
+		parser.error("argument -v/--var: can't find variablename '"+args.var+"' in "
+			"file '"+args.file.name+"': [Errno 2] KeyError: '"+args.var+"'")
 
-def get_args():
+def get_parser():
 	parser = argparse.ArgumentParser(description="Reads a data-file with "
 		"name-value pairs, and outputs the value of the specified name with the "
 		"denoted parts substituted according. ", prog="svf", 
 		usage="svf [options] -f FILE -v VAR", add_help=False)
 	
 	option_args = parser.add_argument_group(title="optional arguments")
+	
+	option_args.add_argument("-r", "--robust", action="store_true", 
+		help="Don't throw errors on uninterpretable statements, "
+		"simply leave them alone. ", dest="robust")
 	
 	required_args = parser.add_argument_group(title="required arguments")
 	
@@ -56,11 +65,13 @@ def get_args():
 		help="show this help message and exit")
 	
 	other_args.add_argument("--version", action="version", 
-		version="%(prog)s 0.1")
+		version="%(prog)s 0.2")
 	
-	return parser.parse_args()
+	return parser
 
 def func_map(match):
+	global interpret_chars
+	global parser
 	global args
 	global vars
 	
@@ -70,12 +81,18 @@ def func_map(match):
 		func_name = match.group(1)
 	
 	if match.group(2) == None:
-		return fncs[func_name]()
+		ret = fncs[func_name]()
 	else:
-		return fncs[func_name](args, vars, *match.group(2).split("."))
+		ret = fncs[func_name](args, vars, parser, *match.group(2).split(interpret_chars[2]))
+	
+	if ret == None:
+		return match.group(0)
+	else:
+		return ret
 
 def interpret(string):
-	pattern = re.compile(r"!([A-Za-z_.]*):([A-Za-z.,;'\"\/_+~@#$%^&*|]*)")
+	global interpret_chars
+	pattern = re.compile(interpret_chars[0]+r"([A-Za-z_.]*)"+interpret_chars[1]+r"([A-Za-z.,;'\"\/_+~@#$%^&*|]*)")
 	return pattern.sub(func_map, string)
 
 if __name__ == "__main__":
