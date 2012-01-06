@@ -1,10 +1,9 @@
 {
-	"hw": "!:h! world!",
-	"h": "Hello",
-	"compile": "javac -classpath !join:classpaths&,!",
-	"classpaths": 
-		["path1",
-		"path2"],
-	"classpath": "single string",
-	"classpat": 1
+	"hw": "!:h&1! world!",
+	"h": {"1": "Hello",
+	      "2": "Goodbye"},
+	
+	"compile": "\"C:\\Program Files (x86)\\Java\\jdk1.6.0_23\\bin\\javac.exe\" -Xlint -classpath \"!join:classpaths&\",\"!\"",
+	"classpaths": ["path1",
+	               "path2"]
 }

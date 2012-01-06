@@ -106,7 +106,7 @@ def func_map(match):
 		ret = fncs[func_name]()
 	else:
 		ret = fncs[func_name](args, vars, parser, 
-			*match.group(2).split(interpret_chars[2]))
+			match.group(2).split(interpret_chars[2]))
 	
 	if ret == None:
 		return match.group(0)
@@ -115,8 +115,8 @@ def func_map(match):
 
 def interpret(string):
 	global interpret_chars
-	pattern = re.compile(interpret_chars[0]+r"([A-Za-z_.]*)"+interpret_chars[1]
-		+r"([A-Za-z.,;'\"\/_+~@#$%^&*|]*)"+interpret_chars[0])
+	pattern = re.compile(interpret_chars[0]+r"([A-Za-z0-9_.]*)"+interpret_chars[1]
+		+r"([A-Za-z0-9.,;'\"\/_+~@#$%^&*|]*)"+interpret_chars[0])
 	return pattern.sub(func_map, string)
 
 if __name__ == "__main__":

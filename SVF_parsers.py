@@ -18,6 +18,10 @@ def generic(args, parser):
 			"file '"+args.file.name+"': [Errno 2] KeyError: "+str(err))
 	try:
 		return psrs[ext](args, parser)
+	#TODO: add checking what the first characters of the file are. 
+	#  On {" or {' or [" or ['    try json
+	#  On <?xml                   try plist
+	#  On [\w or \w               try ini
 	except KeyError as err:
 		parser.error("argument -a/--format: can't recognise extension '"+ext+"' of "
 			"file '"+args.file.name+"': [Errno 2] '"+ext+"'")
@@ -28,6 +32,8 @@ def _json(args, parser):
 	except Exception as err:
 		parser.error("argument -f/--file: can't find any json in file '"
 			+args.file.name+"': [Errno 2] "+str(err)+"\nWrong encoding maybe?")
+
+#TODO: add plist and ini support
 
 psrs = {
 'gen': generic,
