@@ -6,37 +6,46 @@
 # version 0.3
 # Parser functions for the SVF commandline tool for reading the file given
 
+from SVF_class import SVF
+
 import os.path
 import json
 
-def generic(args, parser):
-	no_interest, ext = os.path.splitext(args.file.name)
+def generic():
+	args = SVF.args
+	err  = SVF.parser.error
+	dont_care, ext = os.path.splitext(args.file.name)
 	#remove dot
 	ext = ext[1:]
 	if ext is 'gen':
-		parser.error("argument -a/--format: can't recognise extension '"+ext+"' of "
+		err("argument -a/--format: can't recognise extension '"+ext+"' of "
 			"file '"+args.file.name+"': [Errno 2] KeyError: "+str(err))
 	try:
-		return psrs[ext](args, parser)
+		return parsers[ext]()
 	#TODO: add checking what the first characters of the file are. 
 	#  On {" or {' or [" or ['    try json
 	#  On <?xml                   try plist
 	#  On [\w or \w               try ini
 	except KeyError as err:
-		parser.error("argument -a/--format: can't recognise extension '"+ext+"' of "
+		err("argument -a/--format: can't recognise extension '"+ext+"' of "
 			"file '"+args.file.name+"': [Errno 2] '"+ext+"'")
 
-def _json(args, parser):
+def _json():
+	args = SVF.args
+	err  = SVF.parser.error
 	try:
 		return json.load(args.file)
 	except Exception as err:
-		parser.error("argument -f/--file: can't find any json in file '"
+		err("argument -f/--file: can't find any json in file '"
 			+args.file.name+"': [Errno 2] "+str(err)+"\nWrong encoding maybe?")
 
 #TODO: add plist and ini support
 
-psrs = {
-'gen': generic,
-'json': _json,
-'js': _json,
+parsers = {
+	'gen':  generic,
+	'json': _json,
+	'js':   _json,
 }
+
+for name in parsers:
+	SVF.parsers[name] = parsers[name]
