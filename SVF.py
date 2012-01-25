@@ -3,7 +3,6 @@
 # Python 3.2 code
 #
 # SVF - Strings/Variables/Function
-# version 0.3
 # This commandline tool reads a data-file with name-value pairs, 
 # and outputs the value of the specified name with some special parts 
 # substituted. 

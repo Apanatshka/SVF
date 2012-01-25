@@ -1,9 +1,15 @@
 {
-	"hw": "!:h&1! world!",
+	"hw": "!r:hmm! world!",
 	"h": {"1": "Hello",
-	      "2": "Goodbye"},
+	      "2": "Goodbye",
+	      "3": "Hay",
+				"yay": "!:h&3!",
+				"nowork": "!:h&nowork!"
+				},
+	"hmm": "!r:h&yay!",
 	
-	"compile": "\"C:\\Program Files (x86)\\Java\\jdk1.6.0_23\\bin\\javac.exe\" -Xlint -classpath \"!join:classpaths&\",\"!\"",
+	"javac_path": "C:\\Program Files (x86)\\Java\\jdk1.6.0_23\\bin\\javac.exe",
+	"compile": "!q:javac_path! -Xlint -classpath !qjoin:classpaths&,!",
 	"classpaths": ["path1",
-	               "path2"]
+	               "!r:hmm!"]
 }
