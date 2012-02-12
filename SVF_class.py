@@ -2,6 +2,26 @@
 # -*- coding: utf-8 -*-
 # Python 3.2 code
 #
+# Copyright (c) 2011 Jeff Smits
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
 # SVF - Strings/Variables/Function
 # This commandline tool reads a data-file with name-value pairs, 
 # and outputs the value of the specified name with some special parts 
@@ -13,14 +33,10 @@
 # I've tried to keep almost everything in this tool configurable and/or 
 # extendable. This includes:
 # - The kind of data-file (parsers are found in SVF_parsers), although currently
-#   only the json format is supported. Planned support for formats: ini, 
-#   plist (with some restrictions). 
+#   only the json format is supported. 
 # - The special characters for identifying to be substituted part, although
-#   only changable in this file. Perhaps commandline changability will be added.
-# - The functions which can be used, found in SVF_functions. Planned functions 
-#   are functions which interpret any newly pasted values. But those will need 
-#   a recursion guard. And I plan to write a function which can read a 
-#   .classpath file created by Eclipse. 
+#   only changable in this file. 
+# - The functions which can be used, found in SVF_functions. 
 
 import argparse
 import json
